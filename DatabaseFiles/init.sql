@@ -26,7 +26,7 @@ CREATE TABLE songs (
 CREATE TABLE playlists (
     playlist_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     
-    user_id INTEGER NOT NULL,
+    creator_id INTEGER NOT NULL,
     `name` VARCHAR(255) NOT NULL
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE users_relations (
     user_id_2 INTEGER NOT NULL,
     friendship_status ENUM('REQUESTED', 'ACCEPTED', 'BLOCKED') NOT NULL,
     
-    PRIMARY KEY (user_id_1, user_id_2, friendship_status)
+    PRIMARY KEY (user_id_1, user_id_2)
 );
 
 CREATE TABLE songs_discoveries (
@@ -51,14 +51,14 @@ CREATE TABLE songs_discoveries (
     song_id INTEGER NOT NULL,
     discovery_date DATE NOT NULL,
 
-	PRIMARY KEY (user_id, song_id, discovery_date)
+	PRIMARY KEY (user_id, song_id)
 );
 
 ALTER TABLE users ADD FOREIGN KEY(playing_song_id) REFERENCES songs (song_id) ON DELETE SET NULL;
 
 ALTER TABLE songs ADD FOREIGN KEY(uploader_id) REFERENCES users (user_id) ON DELETE CASCADE;
 
-ALTER TABLE playlists ADD FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE;
+ALTER TABLE playlists ADD FOREIGN KEY (creator_id) REFERENCES users (user_id) ON DELETE CASCADE;
 
 ALTER TABLE playlist_songs ADD FOREIGN KEY (playlist_id) REFERENCES playlists (playlist_id) ON DELETE CASCADE, 
 			   ADD FOREIGN KEY (song_id) REFERENCES songs (song_id) ON DELETE CASCADE;
