@@ -7,8 +7,8 @@ CREATE TABLE users (
     
     username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    `name` varchar(255),
+    password TEXT NOT NULL,
+    `name` varchar(255) DEFAULT (username),
     `status` ENUM('ONLINE', 'OFFLINE', "LISTENING") NOT NULL DEFAULT 'OFFLINE',
     playing_song_id INTEGER DEFAULT NULL
 );
